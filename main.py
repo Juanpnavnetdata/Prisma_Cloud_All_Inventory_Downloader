@@ -60,7 +60,7 @@ for x in range(counter):
 
 fieldnames = list(data_main[0].keys())
 with open("my_data.csv", "w", newline="") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='preserve')
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='ignore')
     writer.writeheader()
     for item in data_main:
       writer.writerow(item)
