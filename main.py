@@ -1,4 +1,4 @@
-import os, json, requests, csv
+import os, json, requests, csv, threading
 
 ak= os.environ.get("ACCESS_KEY")
 secret = os.environ.get("SECRET")
@@ -44,18 +44,22 @@ print(data['nextPageToken'])
 print(data['totalMatchedCount'])
 
 counter=data['totalMatchedCount']
+counter=counter/10000
 next_page_token=data['nextPageToken']
 data_main=data['resources']
 n=0
 
-for x in range(data['totalMatchedCount']):
+for x in range(counter):
     data=asset_explorer("aws",next_page_token)
     next_page_token=data['nextPageToken']
     data_main.append(data['resources'])
+    n=n+1
     print(data['nextPageToken'])
-    print(n+1)
+    print(n)
 
-with open("my_data.csv", "w", encoding="utf-8", newline="") as csvfile:
-    writer = csv.writer(csvfile)
-    for line in data_main.splitlines():
-        writer.writerow([line])
+fieldnames = list(data_main[0].keys())
+with open("my_data.csv", "w", newline="") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for item in data_main:
+      writer.writerow(item)
