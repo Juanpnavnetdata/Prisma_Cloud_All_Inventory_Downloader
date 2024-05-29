@@ -41,11 +41,11 @@ def asset_explorer(cloud,pageToken=""):
     
 data=asset_explorer("aws")
 print(data['nextPageToken'])
-print(data['totalMatchedCount'])
 
 counter=data['totalMatchedCount']
 counter=counter/10000
 counter=int(counter)
+print(counter)
 next_page_token=data['nextPageToken']
 data_main=data['resources']
 n=0
@@ -60,7 +60,7 @@ for x in range(counter):
 
 fieldnames = list(data_main[0].keys())
 with open("my_data.csv", "w", newline="") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, extrasaction='preserve')
     writer.writeheader()
     for item in data_main:
       writer.writerow(item)
