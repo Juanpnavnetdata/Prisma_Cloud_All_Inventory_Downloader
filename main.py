@@ -50,13 +50,14 @@ next_page_token=data['nextPageToken']
 data_main=data['resources']
 n=0
 
-for x in range(counter):
+for x in range(1):
     data=asset_explorer("aws",next_page_token)
     next_page_token=data['nextPageToken']
     data_main.append(data['resources'])
     n=n+1
     print(data['nextPageToken'])
     print(n)
+    del data
 
 fieldnames = list(data_main[0].keys())
 with open("my_data.csv", "w", newline="") as csvfile:
