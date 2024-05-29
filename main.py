@@ -45,6 +45,7 @@ print(data['totalMatchedCount'])
 
 counter=data['totalMatchedCount']
 counter=counter/10000
+counter=int(counter)
 next_page_token=data['nextPageToken']
 data_main=data['resources']
 n=0
